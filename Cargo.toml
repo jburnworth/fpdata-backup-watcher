@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 postgres = "0.17.5"
+zip = "0.5"
