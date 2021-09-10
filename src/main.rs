@@ -24,25 +24,26 @@ fn main() {
         };
         // Only print files, not directories
         if ! file.name().ends_with('/') {
-            println!("Found file: {}", outpath.display());
-            println!("{}", file.name());
+            //println!("Found file: {}", outpath.display());
+            //println!("{}", file.name());
             if file.name().ends_with(".json") {
                 // Read file into string
                 let mut contents = String::new();
                 file.read_to_string(&mut contents).unwrap();
-                println!("{}", contents);
+                //println!("{}", contents);
                 // parse string with serde
-                backup_parsing::parse_json(file.name());
+                backup_parsing::parse_json(contents.as_str());
             }
         }
     }
 }
 
 mod backup_parsing {
-    pub fn parse_json<P: AsRef<std::path::Path>>(path: P) {
-        println!("Watch out, we're parsing jsons {:#?}", path.as_ref());
-        // let me = std::fs::File::open(path);
-        // let reader = std::io::BufReader::new(me);
-
+use serde_json::*;
+    pub fn parse_json(json_data: &str ) {
+        println!("Watch out, we're parsing jsons ");
+        let v: Value = from_str(json_data).expect("JSON was not well formatted");
+        //println!("{:?}", v);
+        println!("Switch locations: {}", v["switch_locations"]);
     }
 }
